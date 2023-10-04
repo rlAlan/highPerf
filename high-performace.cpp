@@ -78,6 +78,8 @@ std::ostream& operator<<(std::ostream& out, const Set& set){
 class Bagel {
 public:
     // Bagel class takes ownership of passed toppings value
+    // if we get rid of std::move and run youll see the copy constructor of Set
+    // being called 4 times but with std::move its only called twice
     Bagel(Set ts)  : toppings_(std::move(ts)) {}
    // {
    //     toppings_.insert(std::move(ts));
