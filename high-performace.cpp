@@ -6,12 +6,23 @@
 #include <string>
 #include <vector>
 
+// learn data structs and move and value semantics
+//
+// TODO: add iterators and finish  basic data struct operations
+// TODO: finish rule of 5 with move stuff
+// TODO: actually add more stuff like how move works with pointer and reference passing
+//        - also learn when youd want this level of optimisation
+//        - and smart pointers smh
+// TODO: sort out neovim cpp colourscheme on windows pain in the arse to look at non colourful text
+// 
+
 template<typename ...T>
 void print(const T &...args) {
     auto printArg{
     [](const auto& arg) {std::cout << arg; }
     };
-    (printArg(args), ...);
+    (printArg(args), ...); // pack-folds
+                           // easy way to expand the function params without recursion or va_start/end type
 }
 
 template<typename ...T>
@@ -45,11 +56,12 @@ public:
     
     friend std::ostream& operator<<(std::ostream &out, const Set& set);
 
-    Set() = default;
+    // rule of five
+    Set() = default; // ez Constructor
     Set(const Set&) { print("Set Has been coppied\n"); }
     Set(Set&&) { print("Move Constructor has been called\n"); }
     Set& operator=(const Set&) = default;
-    Set& operator=(Set&&) = default;
+    Set& operator=(Set&&) = default; // forgor :[ i think its an r-value assignment overload but idk
 
 private:
     std::vector<std::string> value;
